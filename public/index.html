@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Next360 Hospital Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: "#0b1220",
+            surface: "#0f1b33",
+            border: "#22304d",
+            text: "#e6edf7",
+            muted: "#9fb0cf",
+            primary: "#4f8cff",
+            primaryHover: "#3b77f0",
+            danger: "#ff5a6a",
+            success: "#39d98a"
+          },
+          borderRadius: { card: "16px" },
+          boxShadow: { soft: "0 10px 30px rgba(0,0,0,.35)" }
+        }
+      }
+    }
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.css" rel="stylesheet" />
+</head>
+<body class="bg-bg text-text min-h-screen">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-surface border border-border px-3 py-2 rounded">Skip to content</a>
+
+  <header class="border-b border-border bg-surface/40 backdrop-blur">
+    <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between" aria-label="Main">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-primary/20 border border-primary/30 grid place-items-center">
+          <span class="font-semibold">N</span>
+        </div>
+        <div>
+          <div class="font-semibold leading-tight">Next360 Hospital Management System</div>
+          <div class="text-sm text-muted">08164781544 • next360@tech.com</div>
+        </div>
+      </div>
+
+      <div id="nav-auth" class="flex items-center gap-2"></div>
+    </nav>
+  </header>
+
+  <main id="main" class="max-w-6xl mx-auto px-4 py-10">
+    <section class="grid lg:grid-cols-2 gap-8 items-start">
+      <div>
+        <h1 class="text-3xl font-semibold tracking-tight">A clean, fast system for patients, appointments, billing, and messaging.</h1>
+        <p class="mt-3 text-muted">Start with core daily workflows and expand to records, inventory, and reporting.</p>
+
+        <div class="mt-6 flex flex-wrap gap-3" id="cta-row"></div>
+
+        <div class="mt-8 grid sm:grid-cols-2 gap-4">
+          <div class="p-5 rounded-card bg-surface border border-border shadow-soft">
+            <div class="text-sm text-muted">Total</div>
+            <div class="mt-2 text-xl font-semibold" id="stat-appointments">—</div>
+            <div class="text-sm text-muted mt-1">Appointments</div>
+          </div>
+          <div class="p-5 rounded-card bg-surface border border-border shadow-soft">
+            <div class="text-sm text-muted">Total</div>
+            <div class="mt-2 text-xl font-semibold" id="stat-patients">—</div>
+            <div class="text-sm text-muted mt-1">Patients</div>
+          </div>
+        </div>
+
+        <div class="mt-6 p-4 rounded-card border border-border bg-surface/60">
+          <div class="text-sm font-medium">Data handling note</div>
+          <ul class="mt-2 text-sm text-muted list-disc pl-5 space-y-1">
+            <li>Before using with real patient data, we will enable strict access controls and audit logging.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-card bg-surface border border-border shadow-soft">
+        <h2 class="text-xl font-semibold">Quick start</h2>
+        <p class="text-sm text-muted mt-1">Login to access patients, billing and messages.</p>
+
+        <div class="mt-5 grid gap-3">
+          <a href="app.html" class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 rounded-lg bg-primary hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-primary/60">
+            Go to dashboard
+          </a>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <a href="login.html" class="w-full inline-flex justify-center items-center px-4 py-2.5 rounded-lg border border-border hover:bg-white/5">Login</a>
+            <a href="signup.html" class="w-full inline-flex justify-center items-center px-4 py-2.5 rounded-lg border border-border hover:bg-white/5">Create account</a>
+          </div>
+        </div>
+
+        <div class="mt-6 border-t border-border pt-5">
+          <div class="text-sm font-medium">Included modules</div>
+          <ul class="mt-2 text-sm text-muted list-disc pl-5 space-y-1">
+            <li>Patients</li>
+            <li>Appointments</li>
+            <li>Billing (print + PDF receipts)</li>
+            <li>Messages (in-app)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-border bg-surface/30">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-muted">
+      Next360 Hospital Management System • 08164781544 • next360@tech.com
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/parse-init.js"></script>
+  <script src="js/app.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.js"></script>
+</body>
+</html>

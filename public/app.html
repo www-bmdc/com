@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard • Next360 Hospital Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: "#0b1220",
+            surface: "#0f1b33",
+            border: "#22304d",
+            text: "#e6edf7",
+            muted: "#9fb0cf",
+            primary: "#4f8cff",
+            primaryHover: "#3b77f0",
+            danger: "#ff5a6a",
+            success: "#39d98a"
+          },
+          borderRadius: { card: "16px" },
+          boxShadow: { soft: "0 10px 30px rgba(0,0,0,.35)" }
+        }
+      }
+    }
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.css" rel="stylesheet" />
+</head>
+<body class="bg-bg text-text min-h-screen">
+  <header class="border-b border-border bg-surface/40 backdrop-blur">
+    <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between" aria-label="Dashboard">
+      <div class="flex items-center gap-3">
+        <a class="font-semibold" href="index.html">Next360 HMS</a>
+        <div class="hidden sm:block text-sm text-muted">08164781544 • next360@tech.com</div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="text-sm text-muted" id="userLabel">—</div>
+        <button id="logoutBtn" class="px-3 py-2 rounded-lg border border-border hover:bg-white/5">Logout</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-semibold">Dashboard</h1>
+        <p class="text-sm text-muted mt-1">Daily operations overview.</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <a href="patients.html" class="px-3 py-2 rounded-lg border border-border hover:bg-white/5">Patients</a>
+        <a href="billing.html" class="px-3 py-2 rounded-lg border border-border hover:bg-white/5">Billing</a>
+        <a href="messages.html" class="px-3 py-2 rounded-lg border border-border hover:bg-white/5">Messages</a>
+      </div>
+    </div>
+
+    <div class="mt-6 grid lg:grid-cols-2 gap-6">
+      <section class="p-6 rounded-card bg-surface border border-border shadow-soft">
+        <h2 class="text-lg font-semibold">Register patient</h2>
+        <p class="text-sm text-muted">Quick add a patient profile.</p>
+        <div id="patientStatus" class="text-sm mt-2"></div>
+
+        <form id="patientForm" class="mt-4 grid gap-3">
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium" for="pFirst">First name</label>
+              <input id="pFirst" required class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium" for="pLast">Last name</label>
+              <input id="pLast" required class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium" for="pDob">Date of birth</label>
+              <input id="pDob" type="date" class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium" for="pPhone">Phone</label>
+              <input id="pPhone" inputmode="tel" class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium" for="pEmail">Email</label>
+            <input id="pEmail" type="email" class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+          </div>
+          <button id="patientBtn" class="mt-2 inline-flex justify-center items-center px-4 py-2.5 rounded-lg bg-primary hover:bg-primaryHover">Save patient</button>
+        </form>
+
+        <div class="mt-4 text-sm text-muted">
+          Need full patient view & exports? Go to <a class="underline" href="patients.html">Patients</a>.
+        </div>
+      </section>
+
+      <section class="p-6 rounded-card bg-surface border border-border shadow-soft">
+        <h2 class="text-lg font-semibold">Schedule appointment</h2>
+        <p class="text-sm text-muted">Link a patient and set time.</p>
+        <div id="apptStatus" class="text-sm mt-2"></div>
+
+        <form id="apptForm" class="mt-4 grid gap-3">
+          <div>
+            <label class="block text-sm font-medium" for="apptPatient">Patient</label>
+            <select id="apptPatient" required class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2">
+              <option value="">Loading…</option>
+            </select>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium" for="apptDate">Date</label>
+              <input id="apptDate" type="date" required class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium" for="apptTime">Time</label>
+              <input id="apptTime" type="time" required class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium" for="apptReason">Reason</label>
+            <input id="apptReason" placeholder="Checkup" class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+          </div>
+          <button id="apptBtn" class="mt-2 inline-flex justify-center items-center px-4 py-2.5 rounded-lg bg-primary hover:bg-primaryHover">Create appointment</button>
+        </form>
+
+        <div class="mt-6">
+          <h3 class="text-sm font-medium">Upcoming</h3>
+          <div id="apptList" class="mt-2 grid gap-2"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/parse-init.js"></script>
+  <script src="js/app.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.js"></script>
+</body>
+</html>
