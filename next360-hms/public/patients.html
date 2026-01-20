@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Patients • Next360 Hospital Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: "#0b1220",
+            surface: "#0f1b33",
+            border: "#22304d",
+            text: "#e6edf7",
+            muted: "#9fb0cf",
+            primary: "#4f8cff",
+            primaryHover: "#3b77f0",
+            danger: "#ff5a6a",
+            success: "#39d98a"
+          },
+          borderRadius: { card: "16px" },
+          boxShadow: { soft: "0 10px 30px rgba(0,0,0,.35)" }
+        }
+      }
+    }
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.css" rel="stylesheet" />
+</head>
+<body class="bg-bg text-text min-h-screen">
+  <header class="border-b border-border bg-surface/40 backdrop-blur">
+    <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between" aria-label="Patients">
+      <div class="flex items-center gap-3">
+        <a class="font-semibold" href="app.html">Next360 HMS</a>
+        <span class="text-sm text-muted">Patients</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="text-sm text-muted" id="userLabel">—</div>
+        <button id="logoutBtn" class="px-3 py-2 rounded-lg border border-border hover:bg-white/5">Logout</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-semibold">Patient registry</h1>
+        <p class="text-sm text-muted mt-1">Search, view, and export patient details.</p>
+      </div>
+      <div class="flex gap-2">
+        <a href="billing.html" class="px-3 py-2 rounded-lg border border-border hover:bg-white/5">Billing</a>
+        <a href="messages.html" class="px-3 py-2 rounded-lg border border-border hover:bg-white/5">Messages</a>
+      </div>
+    </div>
+
+    <section class="mt-6 grid lg:grid-cols-5 gap-6 items-start">
+      <div class="lg:col-span-2 p-6 rounded-card bg-surface border border-border shadow-soft">
+        <h2 class="text-lg font-semibold">Add patient</h2>
+        <div id="pStatus" class="text-sm mt-2"></div>
+
+        <form id="patientForm" class="mt-4 grid gap-3">
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium" for="pFirst">First name</label>
+              <input id="pFirst" required class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium" for="pLast">Last name</label>
+              <input id="pLast" required class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium" for="pDob">Date of birth</label>
+              <input id="pDob" type="date" class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium" for="pPhone">Phone</label>
+              <input id="pPhone" inputmode="tel" class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium" for="pEmail">Email</label>
+            <input id="pEmail" type="email" class="mt-1 w-full rounded-lg bg-bg border border-border px-3 py-2" />
+          </div>
+          <button class="mt-2 inline-flex justify-center items-center px-4 py-2.5 rounded-lg bg-primary hover:bg-primaryHover">Save patient</button>
+        </form>
+      </div>
+
+      <div class="lg:col-span-3 p-6 rounded-card bg-surface border border-border shadow-soft">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <h2 class="text-lg font-semibold">Patients</h2>
+            <p class="text-sm text-muted">Click a patient to view details and download PDF.</p>
+          </div>
+          <div class="w-full sm:w-64">
+            <label class="sr-only" for="search">Search</label>
+            <input id="search" placeholder="Search name…" class="w-full rounded-lg bg-bg border border-border px-3 py-2" />
+          </div>
+        </div>
+
+        <div class="mt-4" id="patientList"></div>
+      </div>
+    </section>
+
+    <section id="patientViewSection" class="hidden mt-8">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-semibold">Patient view</h2>
+          <p class="text-sm text-muted">Download a PDF summary or print.</p>
+        </div>
+        <div class="flex gap-2">
+          <button id="pPrintBtn" class="px-3 py-2 rounded-lg border border-border hover:bg-white/5">Print</button>
+          <button id="pPdfBtn" class="px-3 py-2 rounded-lg bg-primary hover:bg-primaryHover">Download PDF</button>
+        </div>
+      </div>
+
+      <div id="patientCard" class="mt-4 bg-white text-black rounded-card overflow-hidden">
+        <div class="p-6 border-b">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="text-xl font-bold">Next360 Hospital Management System</div>
+              <div class="text-sm">Phone: 08164781544</div>
+              <div class="text-sm">Email: next360@tech.com</div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm">Patient Summary</div>
+              <div class="text-sm" id="pvGenerated">—</div>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <div class="text-sm font-semibold">Patient</div>
+              <div class="text-sm" id="pvName">—</div>
+            </div>
+            <div>
+              <div class="text-sm font-semibold">Contact</div>
+              <div class="text-sm" id="pvContact">—</div>
+            </div>
+            <div>
+              <div class="text-sm font-semibold">Date of birth</div>
+              <div class="text-sm" id="pvDob">—</div>
+            </div>
+            <div>
+              <div class="text-sm font-semibold">Patient ID</div>
+              <div class="text-sm" id="pvId">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/parse-init.js"></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/pdf.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.js"></script>
+</body>
+</html>
